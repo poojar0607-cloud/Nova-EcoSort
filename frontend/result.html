@@ -47,7 +47,7 @@
 
                 <div class="image-preview">
 
-                    <img src="images/sample.jpg" alt="Analysed Image">
+                    <img id="resultImage" alt="Analysed Image">
 
                     <!-- If no image is available use this -->
                     <!-- <p>Analysed Image</p> -->
@@ -62,8 +62,7 @@
 
                         <h2>Waste Type Detected</h2>
 
-                        <span class="plastic-badge">
-                            Plastic
+                        <span class="plastic-badge" id="wasteType">
                         </span>
 
                     </div>
@@ -72,9 +71,7 @@
 
                         <h2>Confidence Score</h2>
 
-                        <span class="confidence-badge">
-                            87%
-                        </span>
+                        <span class="confidence-badge" id="confidence"></span>
 
                     </div>
 
@@ -82,15 +79,7 @@
 
                         <h2>Recycling Instructions</h2>
 
-                        <ul>
-
-                            <li>Rinse the plastic container</li>
-
-                            <li>Remove any labels if possible</li>
-
-                            <li>Dispose in the Blue Bin</li>
-
-                        </ul>
+                        <ul id="instructions"></ul>
 
                     </div>
 
@@ -98,19 +87,12 @@
 
                         <h2>🌱 Environmental Impact</h2>
 
-                        <div class="impact-box">
-
-                            Recycling plastic reduces landfill waste,
-                            saves energy and helps protect marine life.
-
-                        </div>
+                        <div class="impact-box" id="impact"></div>
 
                     </div>
 
-                    <button class="upload-btn">
-
+                    <button class="upload-btn" onclick="window.location.href='analyze.html'">
                         Upload New Image
-
                     </button>
 
                 </div>
@@ -120,6 +102,45 @@
         </div>
 
     </section>
+
+    <script>
+
+    const prediction = localStorage.getItem("prediction");
+    const image = localStorage.getItem("image");
+
+    document.getElementById("resultImage").src = image;
+    document.getElementById("wasteType").textContent = prediction;
+
+    if(prediction === "Recyclable"){
+
+        document.getElementById("confidence").textContent = "High";
+
+        document.getElementById("instructions").innerHTML = `
+            <li>Clean the waste item.</li>
+            <li>Place it in the recycling bin.</li>
+            <li>Avoid mixing with organic waste.</li>
+        `;
+
+        document.getElementById("impact").textContent =
+        "Recycling conserves natural resources, saves energy, and reduces landfill waste.";
+
+    }
+    else{
+
+        document.getElementById("confidence").textContent = "High";
+
+        document.getElementById("instructions").innerHTML = `
+            <li>Dispose in the organic waste bin.</li>
+            <li>Compost if possible.</li>
+            <li>Keep separate from recyclable waste.</li>
+        `;
+
+        document.getElementById("impact").textContent =
+        "Organic waste can be converted into compost, enriching soil and reducing methane emissions.";
+
+    }
+
+    </script>
 
 </body>
 

@@ -56,14 +56,24 @@
 
                 <!-- Choose Image Button -->
                 <label for="imageInput" class="upload-btn">
-                    Choose Image
+                Upload
                 </label>
 
                 <br><br>
+                
+                <img id="uploadedImage"
+                    style="display:none;
+                    width:220px;
+                    border-radius:12px;
+                    margin:20px auto;
+                    box-shadow:0 4px 10px rgba(0,0,0,.15);">
+
+                <br>
+
 
                 <!-- Analyze Button -->
-                <button onclick="uploadImage()" class="upload-btn">
-                    Analyze Waste
+                <button onclick="uploadImage()" class="analyze-btn">
+                Analyze Waste
                 </button>
 
                 <p class="file-info">
@@ -75,12 +85,9 @@
             <br>
 
             <!-- Uploaded Image -->
-            <img id="uploadedImage" width="250">
-
-            <h2>
-                Prediction:
-                <span id="prediction">--</span>
-            </h2>
+            <img id="uploadedImage"
+                width="250"
+                style="display:none; margin:20px auto; border-radius:10px;">
 
             <div class="tips">
 

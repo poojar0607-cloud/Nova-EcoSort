@@ -395,9 +395,51 @@ transition:.3s;
 
 }
 
+.analyze-btn{
+
+    background:#1976D2;
+    color:white;
+
+    width:202px;
+    height:56px;
+
+    border:none;
+    border-radius:10px;
+
+    font-size:20px;
+    font-weight:600;
+
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.analyze-btn:hover{
+
+    background:#1565C0;
+    transform:scale(1.03);
+
+}
+
 .upload-btn:hover{
 
 background:#256728;
+
+}
+
+#uploadedImage{
+
+    display:none;
+
+    width:220px;
+    height:220px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    margin:20px auto;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
 
 }
 

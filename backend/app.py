@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 from predict_model import predict_image
@@ -11,33 +11,35 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
-@app.route("/", methods=["GET"])
+@app.route("/")
 def home():
-    return "NovaEcoSort backend is running"
+    return "Backend Running"
 
 
 @app.route("/upload", methods=["POST"])
-def upload_image():
+def upload():
+
     if "image" not in request.files:
-        return jsonify({"error": "No image sent"}), 400
+        return jsonify({"error": "No image uploaded"}), 400
 
     image = request.files["image"]
 
-    if image.filename == "":
-        return jsonify({"error": "Empty filename"}), 400
+    filename = image.filename
+    filepath = os.path.join(UPLOAD_FOLDER, filename)
 
-    image_path = os.path.join(app.config["UPLOAD_FOLDER"], image.filename)
-    image.save(image_path)
+    image.save(filepath)
 
-   # predict using ML model
-    result = predict_image(image_path)
+    prediction = predict_image(filepath)
 
     return jsonify({
-        "message": "Image uploaded successfully",
-        "filename": image.filename,
-        "image_path": image_path,
-        "prediction": result
+        "prediction": prediction,
+        "image_path": f"uploads/{filename}"
     })
+
+
+@app.route("/uploads/<filename>")
+def uploaded_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 
 if __name__ == "__main__":

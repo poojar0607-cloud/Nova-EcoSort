@@ -1,14 +1,24 @@
 console.log("script.js loaded");
 
+const imageInput = document.getElementById("imageInput");
+const uploadedImage = document.getElementById("uploadedImage");
+
+imageInput.addEventListener("change", function () {
+
+    if (this.files.length > 0) {
+
+        uploadedImage.src = URL.createObjectURL(this.files[0]);
+        uploadedImage.style.display = "block";
+
+    }
+
+});
+
 async function uploadImage() {
 
     console.log("Button clicked");
 
-    const fileInput = document.getElementById("imageInput");
-
-
-    const fileInput = document.getElementById("imageInput");
-
+    const fileInput = imageInput;
     if (fileInput.files.length === 0) {
         alert("Please select an image.");
         return;
@@ -18,33 +28,27 @@ async function uploadImage() {
     formData.append("image", fileInput.files[0]);
 
     try {
-
         const response = await fetch("http://127.0.0.1:5000/upload", {
             method: "POST",
             body: formData
         });
 
         const data = await response.json();
+        console.log(data);
 
         if (response.ok) {
 
-            document.getElementById("prediction").innerHTML =
-                data.prediction;
+            localStorage.setItem("prediction", data.prediction);
+            localStorage.setItem("image", "http://127.0.0.1:5000/" + data.image_path);
 
-            document.getElementById("uploadedImage").src =
-                "http://127.0.0.1:5000/" + data.image_path;
+            window.location.href = "result.html";
 
         } else {
-
-            alert(data.message);
-
+            alert(data.error || "Upload failed");
         }
 
     } catch (error) {
-
-        console.log(error);
-        alert("Server not running.");
-
+        console.error(error);
+        alert("Cannot connect to backend.");
     }
-
 }
