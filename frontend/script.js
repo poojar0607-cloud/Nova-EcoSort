@@ -52,3 +52,55 @@ async function uploadImage() {
         alert("Cannot connect to backend.");
     }
 }
+
+const dropArea = document.getElementById("dropArea");
+const fileInput = document.getElementById("imageInput");
+
+// Prevent browser from opening the image
+["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+    dropArea.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+});
+
+// Highlight box while dragging
+["dragenter", "dragover"].forEach(eventName => {
+    dropArea.addEventListener(eventName, () => {
+        dropArea.classList.add("drag-active");
+    });
+});
+
+// Remove highlight
+["dragleave", "drop"].forEach(eventName => {
+    dropArea.addEventListener(eventName, () => {
+        dropArea.classList.remove("drag-active");
+    });
+});
+
+// Drop image
+dropArea.addEventListener("drop", (e) => {
+
+    const files = e.dataTransfer.files;
+
+    if (files.length > 0) {
+
+        fileInput.files = files;
+
+        // Show preview
+        const img = document.getElementById("uploadedImage");
+        img.src = URL.createObjectURL(files[0]);
+        img.style.display = "block";
+    }
+});
+
+// Preview when using Choose button
+fileInput.addEventListener("change", () => {
+
+    if (fileInput.files.length > 0) {
+
+        const img = document.getElementById("uploadedImage");
+        img.src = URL.createObjectURL(fileInput.files[0]);
+        img.style.display = "block";
+    }
+});

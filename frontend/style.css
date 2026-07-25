@@ -426,21 +426,19 @@ background:#256728;
 
 }
 
-#uploadedImage{
+.drag-active{
+    border:3px dashed #2E7D32;
+    background:#E8F5E9;
+    transition:.3s;
+}
 
-    display:none;
-
-    width:220px;
-    height:220px;
-
-    object-fit:cover;
-
-    border-radius:12px;
-
-    margin:20px auto;
-
-    box-shadow:0 4px 12px rgba(0,0,0,.15);
-
+#uploadedImage {
+    display: none;
+    width: 220px;
+    max-width: 100%;
+    border-radius: 12px;
+    margin: 20px auto;
+    display: block;
 }
 
 .file-info{
